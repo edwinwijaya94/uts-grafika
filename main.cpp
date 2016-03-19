@@ -86,7 +86,28 @@ int main(){
 		// }
 		if (c == 'w') {
 			areas["ForeignArea56"].undraw(&framebuffer);
-			areas["ForeignArea56"].transform(0, -10, 0, 0);
+			areas["ForeignArea56"].transform(0, -1, 1, 0);
+			areas["ForeignArea56"].draw(&framebuffer, WHITE);
+			//areas["ForeignArea56"].fill(RED, &framebuffer, windowBorder);
+			framebuffer.SwapBuffers();
+		}
+		else if (c == 's') {
+			areas["ForeignArea56"].undraw(&framebuffer);
+			areas["ForeignArea56"].transform(0, 1, 1, 0);
+			areas["ForeignArea56"].draw(&framebuffer, WHITE);
+			//areas["ForeignArea56"].fill(RED, &framebuffer, windowBorder);
+			framebuffer.SwapBuffers();
+		}
+		else if (c == 'a') {
+			areas["ForeignArea56"].undraw(&framebuffer);
+			areas["ForeignArea56"].transform(-1, 0, 1, 0);
+			areas["ForeignArea56"].draw(&framebuffer, WHITE);
+			//areas["ForeignArea56"].fill(RED, &framebuffer, windowBorder);
+			framebuffer.SwapBuffers();
+		}
+		else if (c == 'd') {
+			areas["ForeignArea56"].undraw(&framebuffer);
+			areas["ForeignArea56"].transform(1, 0, 1, 0);
 			areas["ForeignArea56"].draw(&framebuffer, WHITE);
 			//areas["ForeignArea56"].fill(RED, &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
@@ -99,7 +120,13 @@ int main(){
 	}
 
 	//printf("area highlighted: %s\n", it->first);	
-	cout << it->first << endl;
+	//cout << it->first << endl;
+
+	vertices<Point> pmy = areas["ForeignArea56"].getVertices();
+
+	for (int i = 0; i < pmy.size(); i++) {
+
+	}
 
 	return 0;
 }
