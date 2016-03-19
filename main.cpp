@@ -9,6 +9,7 @@
 #include "shape.h"
 #include "maillot.h"
 #include <unistd.h>
+//#include <fstream>
 
 using namespace std;
 
@@ -49,8 +50,8 @@ int main(){
 		//s.draw(&framebuffer, WHITE);
 		sclip.draw(&framebuffer, WHITE);
 		//areas.push_back(s); // add new area
-		//areas[str] = s;
-		areas[str] = sclip;
+		areas[str] = s;
+		//areas[str] = sclip;
 	}
 	printf("area size %d\n", areas.size());	
 
@@ -60,9 +61,12 @@ int main(){
 	// }
 	framebuffer.SwapBuffers();
 
-	map<string, Shape>::iterator it=areas.begin();
-	it->second.fill(RED, &framebuffer, windowBorder);
-	framebuffer.SwapBuffers();
+	// map<string, Shape>::iterator it=areas.begin();
+	// it->second.fill(RED, &framebuffer, windowBorder);
+	// framebuffer.SwapBuffers();
+
+	int dx = 10;
+	int dy = 10;
 
 	while(1){
 		char c = getch();
@@ -85,31 +89,43 @@ int main(){
 		// 	}
 		// }
 		if (c == 'w') {
-			areas["ForeignArea56"].undraw(&framebuffer);
-			areas["ForeignArea56"].transform(0, -1, 1, 0);
-			areas["ForeignArea56"].draw(&framebuffer, WHITE);
-			//areas["ForeignArea56"].fill(RED, &framebuffer, windowBorder);
+			framebuffer.ClearScreen();
+			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+				//it->second.undraw(&framebuffer);
+				it->second.transform(0, -dy, 1, 0);
+				Shape sclip = Pclip(it->second, Pmin, Pmax);
+				sclip.draw(&framebuffer, WHITE);
+			}
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 's') {
-			areas["ForeignArea56"].undraw(&framebuffer);
-			areas["ForeignArea56"].transform(0, 1, 1, 0);
-			areas["ForeignArea56"].draw(&framebuffer, WHITE);
-			//areas["ForeignArea56"].fill(RED, &framebuffer, windowBorder);
+			framebuffer.ClearScreen();
+			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+				//it->second.undraw(&framebuffer);
+				it->second.transform(0, dy, 1, 0);
+				Shape sclip = Pclip(it->second, Pmin, Pmax);
+				sclip.draw(&framebuffer, WHITE);
+			}
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'a') {
-			areas["ForeignArea56"].undraw(&framebuffer);
-			areas["ForeignArea56"].transform(-1, 0, 1, 0);
-			areas["ForeignArea56"].draw(&framebuffer, WHITE);
-			//areas["ForeignArea56"].fill(RED, &framebuffer, windowBorder);
+			framebuffer.ClearScreen();
+			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+				//it->second.undraw(&framebuffer);
+				it->second.transform(-dx, 0, 1, 0);
+				Shape sclip = Pclip(it->second, Pmin, Pmax);
+				sclip.draw(&framebuffer, WHITE);
+			}
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'd') {
-			areas["ForeignArea56"].undraw(&framebuffer);
-			areas["ForeignArea56"].transform(1, 0, 1, 0);
-			areas["ForeignArea56"].draw(&framebuffer, WHITE);
-			//areas["ForeignArea56"].fill(RED, &framebuffer, windowBorder);
+			framebuffer.ClearScreen();
+			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+				//it->second.undraw(&framebuffer);
+				it->second.transform(dx, 0, 1, 0);
+				Shape sclip = Pclip(it->second, Pmin, Pmax);
+				sclip.draw(&framebuffer, WHITE);
+			}
 			framebuffer.SwapBuffers();
 		}
 		else if(c == 'x'){
@@ -122,11 +138,16 @@ int main(){
 	//printf("area highlighted: %s\n", it->first);	
 	//cout << it->first << endl;
 
-	vertices<Point> pmy = areas["ForeignArea56"].getVertices();
+	// vector<Point> pmy = areas["ForeignArea56"].getVertices();
+	// ofstream myfile("output.txt");
 
-	for (int i = 0; i < pmy.size(); i++) {
+	// if (myfile.is_open()) {
+	// 	for (int i = 0; i < pmy.size(); i++) {
+	// 		myfile << pmy[i].x << " " << pmy[i].y << endl;
+	// 	}
+	// 	myfile.close();
+	// }
 
-	}
 
 	return 0;
 }
