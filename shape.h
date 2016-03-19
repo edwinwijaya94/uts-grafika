@@ -32,6 +32,7 @@ class Shape {
     void transform(int dx, int dy, float scale, float rotation);
     void unfill(Framebuffer* f, vector<Point> windowBorder);
     void undraw(Framebuffer* f);
+    void setCentroid(Point newPoint);
 };
 
 #endif

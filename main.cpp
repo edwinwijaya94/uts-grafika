@@ -39,6 +39,7 @@ int main(){
 
 	Point Pmin = {0, 0};
 	Point Pmax = {framebuffer.width, framebuffer.height};
+	Point Pcenter = {framebuffer.width/2, framebuffer.height/2};
 	//Shape res = Pclip(shape3, Pmin, Pmax);
 
 	for(map<string, vector<Point>>::iterator it=points.begin(); it!=points.end(); it++){
@@ -46,9 +47,11 @@ int main(){
 		string str = it->first;
 	
 		Shape s(Pol);
+		s.setCentroid(Pcenter);
 		Shape sclip = Pclip(s, Pmin, Pmax);
 		//s.draw(&framebuffer, WHITE);
 		sclip.draw(&framebuffer, WHITE);
+		//sclip.fill(WHITE, &framebuffer, windowBorder);
 		//areas.push_back(s); // add new area
 		areas[str] = s;
 		//areas[str] = sclip;
@@ -61,70 +64,132 @@ int main(){
 	// }
 	framebuffer.SwapBuffers();
 
-	// map<string, Shape>::iterator it=areas.begin();
-	// it->second.fill(RED, &framebuffer, windowBorder);
-	// framebuffer.SwapBuffers();
+	map<string, Shape>::iterator it2=areas.begin();
+	it2->second.fill(RED, &framebuffer, windowBorder);
+	framebuffer.SwapBuffers();
 
 	int dx = 10;
 	int dy = 10;
+	float sf = 0.1; // scaling factor
+	float deg = 15.0; // degree of rotation
 
 	while(1){
 		char c = getch();
-		// if(c == 'd'){ //fill next area
-		// 	if (next(it) != areas.end()) {
-		// 		it->second.unfill(&framebuffer, windowBorder);
-		// 		it->second.draw(&framebuffer, WHITE);
-		// 		it++;
-		// 		it->second.fill(RED, &framebuffer, windowBorder);
-		// 		framebuffer.SwapBuffers();
-		// 	}
-		// } 
-		// else if(c == 'a'){ //fill previous area
-		// 	if (prev(it) != prev(areas.begin())) {
-		// 		it->second.unfill(&framebuffer, windowBorder);
-		// 		it->second.draw(&framebuffer, WHITE);
-		// 		it--;
-		// 		it->second.fill(RED, &framebuffer, windowBorder);	
-		// 		framebuffer.SwapBuffers();
-		// 	}
-		// }
-		if (c == 'w') {
+		if(c == 'h'){ //fill next area
+			if (next(it2) != areas.end()) {
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				it2++;
+				it2->second.fill(RED, &framebuffer, windowBorder);
+				framebuffer.SwapBuffers();
+			}
+		} 
+		else if(c == 'g'){ //fill previous area
+			if (prev(it2) != prev(areas.begin())) {
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				it2--;
+				it2->second.fill(RED, &framebuffer, windowBorder);	
+				framebuffer.SwapBuffers();
+			}
+		}
+		else if (c == 'w') { // move up
 			framebuffer.ClearScreen();
 			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
 				//it->second.undraw(&framebuffer);
+				//it->second.unfill(&framebuffer, windowBorder);
+				//initMatrix();
 				it->second.transform(0, -dy, 1, 0);
 				Shape sclip = Pclip(it->second, Pmin, Pmax);
 				sclip.draw(&framebuffer, WHITE);
+				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
 			framebuffer.SwapBuffers();
 		}
-		else if (c == 's') {
+		else if (c == 's') { // move down
 			framebuffer.ClearScreen();
 			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
 				//it->second.undraw(&framebuffer);
+				//it->second.unfill(&framebuffer, windowBorder);
+				//initMatrix();
 				it->second.transform(0, dy, 1, 0);
 				Shape sclip = Pclip(it->second, Pmin, Pmax);
 				sclip.draw(&framebuffer, WHITE);
+				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
 			framebuffer.SwapBuffers();
 		}
-		else if (c == 'a') {
+		else if (c == 'a') { // move left
 			framebuffer.ClearScreen();
 			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
 				//it->second.undraw(&framebuffer);
+				//it->second.unfill(&framebuffer, windowBorder);
+				//initMatrix();
 				it->second.transform(-dx, 0, 1, 0);
 				Shape sclip = Pclip(it->second, Pmin, Pmax);
 				sclip.draw(&framebuffer, WHITE);
+				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
 			framebuffer.SwapBuffers();
 		}
-		else if (c == 'd') {
+		else if (c == 'd') { // move right
 			framebuffer.ClearScreen();
 			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
 				//it->second.undraw(&framebuffer);
+				//it->second.unfill(&framebuffer, windowBorder);
+				//initMatrix();
 				it->second.transform(dx, 0, 1, 0);
 				Shape sclip = Pclip(it->second, Pmin, Pmax);
 				sclip.draw(&framebuffer, WHITE);
+				//sclip.fill(WHITE, &framebuffer, windowBorder);
+			}
+			framebuffer.SwapBuffers();
+		}
+		else if (c == 'i') { // zooom in
+			framebuffer.ClearScreen();
+			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+				//it->second.undraw(&framebuffer);
+				//initMatrix();
+				it->second.transform(0, 0, 1+sf, 0);
+				Shape sclip = Pclip(it->second, Pmin, Pmax);
+				sclip.draw(&framebuffer, WHITE);
+				//sclip.fill(WHITE, &framebuffer, windowBorder);
+			}
+			framebuffer.SwapBuffers();
+		}
+		else if (c == 'o') { // zoom out
+			framebuffer.ClearScreen();
+			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+				//it->second.undraw(&framebuffer);
+				//initMatrix();
+				it->second.transform(0, 0, 1-sf, 0);
+				Shape sclip = Pclip(it->second, Pmin, Pmax);
+				sclip.draw(&framebuffer, WHITE);
+				//sclip.fill(WHITE, &framebuffer, windowBorder);
+			}
+			framebuffer.SwapBuffers();
+		}
+		else if (c == 'l') { // rotate right
+			framebuffer.ClearScreen();
+			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+				//it->second.undraw(&framebuffer);
+				//initMatrix();
+				it->second.transform(0, 0, 1, deg);
+				Shape sclip = Pclip(it->second, Pmin, Pmax);
+				sclip.draw(&framebuffer, WHITE);
+				//sclip.fill(WHITE, &framebuffer, windowBorder);
+			}
+			framebuffer.SwapBuffers();
+		}
+		else if (c == 'k') { // rotate left
+			framebuffer.ClearScreen();
+			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+				//it->second.undraw(&framebuffer);
+				//initMatrix();
+				it->second.transform(0, 0, 1, -deg);
+				Shape sclip = Pclip(it->second, Pmin, Pmax);
+				sclip.draw(&framebuffer, WHITE);
+				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
 			framebuffer.SwapBuffers();
 		}
@@ -135,8 +200,7 @@ int main(){
 
 	}
 
-	//printf("area highlighted: %s\n", it->first);	
-	//cout << it->first << endl;
+	cout << "area highlighted : " << it2->first << endl;
 
 	// vector<Point> pmy = areas["ForeignArea56"].getVertices();
 	// ofstream myfile("output.txt");

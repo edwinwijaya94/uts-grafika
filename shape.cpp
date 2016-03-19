@@ -43,7 +43,7 @@ void Shape::setVertices(vector<Point> vertices) {
 		  xmin = vertices[i].x;
 		//printf("titik ke-%d : (%d, %d)\n", i, vertices[i].x, vertices[i].y);
 	}
-	centroid = Point((xmax+xmin)/2, (ymax+ymin)/2);
+	//centroid = Point((xmax+xmin)/2, (ymax+ymin)/2);
 	//for (int j = 0; j < lines.size(); j++)
 	      //printf("garis ke-%d : (%d, %d) - (%d, %d)\n", j, lines[j].phigh.x, lines[j].phigh.y, lines[j].plow.x, lines[j].plow.y);	
 	//printf("ymax : %d, ymin : %d\n", ymax, ymin);
@@ -133,8 +133,8 @@ void Shape::getTipotForWindow(vector<Point> *tipot, vector<Point> windowBorder){
 void Shape::transform(int dx, int dy, float scale, float rotation) {
 	float PI = 3.14159265;
     float rad = rotation * PI / 180.0f;
-    centroid.x += dx;
-    centroid.y += dy;
+    //centroid.x += dx;
+    //centroid.y += dy;
 	for (int i = 0; i < vertices.size(); i++) {
 		Point Pnew;
 	   
@@ -274,4 +274,9 @@ void Shape::undraw(Framebuffer* f) {
         Point p2(vertices[(k+1)%vertices.size()].x, vertices[(k+1)%vertices.size()].y);
         f->DrawLine(p1, p2, BLACK);
  } 
+}
+
+void Shape::setCentroid(Point newPoint) {
+  centroid.x = newPoint.x;
+  centroid.y = newPoint.y;
 }
