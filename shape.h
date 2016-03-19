@@ -23,11 +23,15 @@ class Shape {
   public:
     Shape();
     Shape(vector<Point> vertices);
+    vector<Point> getVertices();
     void setVertices(vector<Point> vertices);
+    void draw(Framebuffer* f, Color32 color);
     void fill(Color32 color, Framebuffer* f, vector<Point> windowBorder);
     void getTipotForWindow(vector<Point> *tipot, vector<Point> windowBorder);
     void fillGradient(Color32 color, int interval, Framebuffer* f);
     void transform(int dx, int dy, float scale, float rotation);
+    void unfill(Framebuffer* f, vector<Point> windowBorder);
+    void undraw(Framebuffer* f);
 };
 
 #endif
