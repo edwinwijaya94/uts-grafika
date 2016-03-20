@@ -96,7 +96,7 @@ int main(){
 	map<string, Shape>::iterator it2=areas.begin();
 	map<string, int>::iterator mapPopulation = populations.begin();
 
-	it2->second.fill(RED, &framebuffer, windowBorder);
+	it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 	framebuffer.SwapBuffers();
 
 	int dx = 10;
@@ -138,6 +138,9 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			it2->second.unfill(&framebuffer, windowBorder);
+			it2->second.draw(&framebuffer, WHITE);
+			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 's') { // move down
@@ -151,6 +154,9 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			it2->second.unfill(&framebuffer, windowBorder);
+			it2->second.draw(&framebuffer, WHITE);
+			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'a') { // move left
@@ -164,6 +170,9 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			it2->second.unfill(&framebuffer, windowBorder);
+			it2->second.draw(&framebuffer, WHITE);
+			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'd') { // move right
@@ -177,6 +186,9 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			it2->second.unfill(&framebuffer, windowBorder);
+			it2->second.draw(&framebuffer, WHITE);
+			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'i') { // zooom in
@@ -189,6 +201,9 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			it2->second.unfill(&framebuffer, windowBorder);
+			it2->second.draw(&framebuffer, WHITE);
+			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'o') { // zoom out
@@ -201,6 +216,9 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			it2->second.unfill(&framebuffer, windowBorder);
+			it2->second.draw(&framebuffer, WHITE);
+			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'l') { // rotate right
@@ -213,6 +231,9 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			it2->second.unfill(&framebuffer, windowBorder);
+			it2->second.draw(&framebuffer, WHITE);
+			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'k') { // rotate left
@@ -225,6 +246,9 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			it2->second.unfill(&framebuffer, windowBorder);
+			it2->second.draw(&framebuffer, WHITE);
+			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 			framebuffer.SwapBuffers();
 		}
 		else if(c == 'x'){
