@@ -14,8 +14,8 @@ void Shape::setVertices(vector<Point> vertices) {
 	this->vertices = vertices;
 	ymin = 2000;
 	ymax = -1;
-	int xmax = -1;
-	int xmin = 2000;
+	xmax = -1;
+	xmin = 2000;
 	for (int i = 0; i < vertices.size(); i++) {
 		if (vertices[i].y > vertices[(i+1)%vertices.size()].y) {
 		  Line line;
@@ -105,8 +105,6 @@ void Shape::fill(Color32 color, Framebuffer* f, vector<Point> windowBorder) {
       	//printf("scanline ke-%d : garis ke 2 : (%d, %d)\n", y, lines[j].curpoint.x, lines[j].curpoint.y);
     }
     
-    //SELECT TIPOT FOR WINDOW AREA ONLY
-    getTipotForWindow(&tipot, windowBorder);
     
     sort(tipot.begin(), tipot.end());
     //for (int i = 0; i < tipot.size(); i ++) 
@@ -123,12 +121,6 @@ void Shape::fill(Color32 color, Framebuffer* f, vector<Point> windowBorder) {
     }
   }
 }
-
-void Shape::getTipotForWindow(vector<Point> *tipot, vector<Point> windowBorder){
-	//IMPLEMENTS HERE, windowBorder defines 4 corner points of a window (defined in main.cpp)
-	
-}
-
 
 void Shape::transform(int dx, int dy, float scale, float rotation) {
 	float PI = 3.14159265;
@@ -248,9 +240,6 @@ void Shape::unfill(Color32 color, Framebuffer* f, vector<Point> windowBorder) {
         //printf("scanline ke-%d : garis ke 2 : (%d, %d)\n", y, lines[j].curpoint.x, lines[j].curpoint.y);
     }
     
-    //SELECT TIPOT FOR WINDOW AREA ONLY
-    getTipotForWindow(&tipot, windowBorder);
-    
     sort(tipot.begin(), tipot.end());
     //for (int i = 0; i < tipot.size(); i ++) 
       //printf("tipot ke-%d : (%d, %d)\n", i, tipot[i].x, tipot[i].y);
@@ -280,3 +269,4 @@ void Shape::setCentroid(Point newPoint) {
   centroid.x = newPoint.x;
   centroid.y = newPoint.y;
 }
+
