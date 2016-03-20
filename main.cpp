@@ -144,6 +144,9 @@ int main(){
 	map<string, int>::iterator mapPopulation = populations.begin();
 
 	it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+	int x = (it2->second.xmax + it2->second.xmin) / 2;
+	int y = (it2->second.ymax + it2->second.ymin) / 2;
+	framebuffer.DrawString("X", x, y, 1, BLACK);
 	printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
 	framebuffer.SwapBuffers();
@@ -167,8 +170,8 @@ int main(){
 					it2->second.draw(&framebuffer, WHITE);
 					it2++; mapPopulation++;
 					it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
-					int x = (it2->second.xmax + it2->second.xmin) / 2;
-					int y = (it2->second.ymax + it2->second.ymin) / 2;
+					x = (it2->second.xmax + it2->second.xmin) / 2;
+					y = (it2->second.ymax + it2->second.ymin) / 2;
 					framebuffer.DrawString("X", x, y, 1, BLACK);
 					printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 					framebuffer.SwapBuffers();
@@ -182,8 +185,8 @@ int main(){
 					it2->second.draw(&framebuffer, WHITE);
 					it2--; mapPopulation--;
 					it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);	
-					int x = (it2->second.xmax + it2->second.xmin) / 2;
-					int y = (it2->second.ymax + it2->second.ymin) / 2;
+					x = (it2->second.xmax + it2->second.xmin) / 2;
+					y = (it2->second.ymax + it2->second.ymin) / 2;
 					framebuffer.DrawString("X", x, y, 1, BLACK);
 					printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 					framebuffer.SwapBuffers();
