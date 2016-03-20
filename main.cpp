@@ -45,8 +45,7 @@ int main(){
 	
 	vector<string> filenames;
     filenames.push_back("indomap.txt");
-    int hex = "#89abe3";
-    cout << "Hex : :" << hex;
+
     //Filenames for coloring the map based on total population of each province
     vector<string> populationFile;
     populationFile.push_back("weight.txt");
@@ -95,6 +94,8 @@ int main(){
 	framebuffer.SwapBuffers();
 
 	map<string, Shape>::iterator it2=areas.begin();
+	map<string, int>::iterator mapPopulation = populations.begin();
+
 	it2->second.fill(RED, &framebuffer, windowBorder);
 	framebuffer.SwapBuffers();
 
@@ -112,8 +113,8 @@ int main(){
 			if (next(it2) != areas.end()) {
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
-				it2++;
-				it2->second.fill(getAreaColour(22000000), &framebuffer, windowBorder);
+				it2++; mapPopulation++;
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 				framebuffer.SwapBuffers();
 			}
 		} 
@@ -121,8 +122,8 @@ int main(){
 			if (prev(it2) != prev(areas.begin())) {
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
-				it2--;
-				it2->second.fill(getAreaColour(15000000), &framebuffer, windowBorder);	
+				it2--; mapPopulation--;
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);	
 				framebuffer.SwapBuffers();
 			}
 		}

@@ -23,6 +23,7 @@ using namespace std;
 // 2 3
 // 5 6
 // 9 8
-map<string, vector<Point> > getPointsFromFile(vector<string>);
+map<string, vector<Point>> getPointsFromFile(vector<string>);
+map<string, int> getIntegersFromFile(vector<string>);
 
 #endif
