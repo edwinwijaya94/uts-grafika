@@ -50,6 +50,10 @@ int main(){
     vector<string> populationFile;
     populationFile.push_back("weight.txt");
 
+    //Filenames for coloring the map
+    vector<string> colorFiles;
+    colorFiles.push_back("colormap.txt");    
+
 	initMatrix();
 	
 	//window border
@@ -62,6 +66,8 @@ int main(){
 	map<string, vector<Point> > points = getPointsFromFile(filenames);
 	//Mapping the population of each region with the same order
 	map<string, int> populations = getIntegersFromFile(populationFile);
+	//Mapping the colors of each region
+	map<string, Color32 > colors = getColorsFromFile(filenames);
 
 	//vector<Shape> areas;
 	map<string, Shape> areas;
@@ -249,6 +255,16 @@ int main(){
 			it2->second.unfill(&framebuffer, windowBorder);
 			it2->second.draw(&framebuffer, WHITE);
 			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+			framebuffer.SwapBuffers();
+		}
+		else if (c == 'c') {
+			initMatrix();
+			for(map<string, Color32>::iterator it=colors.begin(); it!=colors.end(); it++){
+				Color32 RGB = it->second;
+				string str = it->first;
+				Shape sclip = Pclip(areas[str], Pmin, Pmax);
+				sclip.fill((Color32)RGB, &framebuffer, windowBorder);
+			}
 			framebuffer.SwapBuffers();
 		}
 		else if(c == 'x'){
