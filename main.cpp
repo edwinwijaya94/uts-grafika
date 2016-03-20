@@ -22,6 +22,11 @@ int main(){
 	
 	vector<string> filenames;
     filenames.push_back("indomap.txt");
+    int hex = "#89abe3";
+    cout << "Hex : :" << hex;
+    //Filenames for coloring the map based on total population of each province
+    vector<string> populationFile;
+    populationFile.push_back("weight.txt");
 
 	initMatrix();
 	
@@ -33,7 +38,9 @@ int main(){
 	windowBorder.push_back((Point){0, framebuffer.height});
 	
 	map<string, vector<Point> > points = getPointsFromFile(filenames);
-	
+	//Mapping the population of each region with the same order
+	map<string, int> populations = getIntegersFromFile(populationFile);
+
 	//vector<Shape> areas;
 	map<string, Shape> areas;
 
