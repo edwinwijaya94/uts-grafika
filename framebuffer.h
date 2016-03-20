@@ -40,6 +40,8 @@ class Framebuffer {
 		void SetPixel(int x, int y, Color32 color);
 		void DrawLine(Point p0, Point p1, Color32 color);
 		void drawCurve(vector<Point2> points, double t, Color32 color);
+		void DrawChar(char c, int x, int y, int scale, Color32 color);
+		void DrawString(char* str, int x, int y, int scale, Color32 color);
 		// void DrawPolygon(Polygon2& polygon, Color32 color);
 		// void FillPolygon(Polygon2& polygon, Color32 color, bool freeMatrix[][1300]);
 };

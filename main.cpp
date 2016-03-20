@@ -38,6 +38,45 @@ Color32 getAreaColour(int citizen){
 	return res;
 }
 
+void removeLabel(string province, string population){
+	// Remove old province
+	char* provinsi_label = new char[province.size() + 1];
+	std::copy(province.begin(), province.end(), provinsi_label);
+	provinsi_label[province.size()] = '\0'; // don't forget the terminating 0
+
+	framebuffer.DrawString(provinsi_label, 10, framebuffer.height - 40, 1, BLACK);
+	delete[] provinsi_label;
+
+	char* populasi_label = new char[population.size() + 1];
+	std::copy(population.begin(), population.end(), populasi_label);
+	populasi_label[population.size()] = '\0'; // don't forget the terminating 0
+
+	framebuffer.DrawString(populasi_label, 10, framebuffer.height - 25, 1, BLACK);
+	delete[] populasi_label;
+}
+
+void printLabel(string new_province, string new_population){
+	// Print new province
+	string provinsi = new_province.c_str();
+
+	char* provinsi_label = new char[provinsi.size() + 1];
+	std::copy(provinsi.begin(), provinsi.end(), provinsi_label);
+	provinsi_label[provinsi.size()] = '\0'; // don't forget the terminating 0
+
+	framebuffer.DrawString(provinsi_label, 10, framebuffer.height - 40, 1, WHITE);
+	delete[] provinsi_label;
+
+	// Print new number
+	string populasi = new_population.c_str();
+
+	char* populasi_label = new char[populasi.size() + 1];
+	std::copy(populasi.begin(), populasi.end(), populasi_label);
+	populasi_label[populasi.size()] = '\0'; // don't forget the terminating 0
+
+	framebuffer.DrawString(populasi_label, 10, framebuffer.height - 25, 1, WHITE);
+	delete[] populasi_label;
+}
+
 int main(){
 	framebuffer.ClearScreen();
 	framebuffer.SwapBuffers();
@@ -97,6 +136,7 @@ int main(){
 	map<string, int>::iterator mapPopulation = populations.begin();
 
 	it2->second.fill(RED, &framebuffer, windowBorder);
+	printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 	framebuffer.SwapBuffers();
 
 	int dx = 10;
@@ -111,19 +151,25 @@ int main(){
 
 		if(c == 'h'){ //fill next area
 			if (next(it2) != areas.end()) {
+				removeLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2++; mapPopulation++;
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 				framebuffer.SwapBuffers();
 			}
 		} 
 		else if(c == 'g'){ //fill previous area
 			if (prev(it2) != prev(areas.begin())) {
+				removeLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2--; mapPopulation--;
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);	
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 				framebuffer.SwapBuffers();
 			}
 		}
@@ -138,6 +184,7 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 's') { // move down
@@ -151,6 +198,7 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'a') { // move left
@@ -164,6 +212,7 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'd') { // move right
@@ -177,6 +226,7 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'i') { // zooom in
@@ -189,6 +239,7 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'o') { // zoom out
@@ -201,6 +252,7 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'l') { // rotate right
@@ -213,6 +265,7 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 			framebuffer.SwapBuffers();
 		}
 		else if (c == 'k') { // rotate left
@@ -225,6 +278,7 @@ int main(){
 				sclip.draw(&framebuffer, WHITE);
 				//sclip.fill(WHITE, &framebuffer, windowBorder);
 			}
+			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 			framebuffer.SwapBuffers();
 		}
 		else if(c == 'x'){
