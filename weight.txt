@@ -97,7 +97,7 @@
 [IrianJayaBarat]
 760000
 
-[Yogyakarta1]
+[Yogyakarta]
 3452390
 
 [JawaBarat]

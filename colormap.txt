@@ -171,3 +171,6 @@
 
 [Gorontalo]
 186 237 140 255
+
+[SulawesiBarat]
+186 237 140 255
