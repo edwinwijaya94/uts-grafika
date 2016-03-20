@@ -11,9 +11,32 @@
 #include <unistd.h>
 //#include <fstream>
 
+#define MAXCITIZEN 43200000 // max citizen in a province
+
 using namespace std;
 
 Framebuffer framebuffer;
+
+Color32 getAreaColour(int citizen){
+	uint8_t r = 0;
+	uint8_t g = 0;
+	uint8_t b = 0;
+	uint8_t a = 255;
+	
+	float frac = float(citizen) / MAXCITIZEN;
+	if(frac >0.5){
+		r = 255;
+		g = (int)(2*(1-frac) * 255);
+	}
+	else{
+		r = (int)(2*(1-frac) * 255);
+		g = 255;
+	}
+	
+	Color32 res = (Color32){r,g,b,a};
+	
+	return res;
+}
 
 int main(){
 	framebuffer.ClearScreen();
@@ -90,7 +113,7 @@ int main(){
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2++;
-				it2->second.fill(RED, &framebuffer, windowBorder);
+				it2->second.fill(getAreaColour(22000000), &framebuffer, windowBorder);
 				framebuffer.SwapBuffers();
 			}
 		} 
@@ -99,7 +122,7 @@ int main(){
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2--;
-				it2->second.fill(RED, &framebuffer, windowBorder);	
+				it2->second.fill(getAreaColour(15000000), &framebuffer, windowBorder);	
 				framebuffer.SwapBuffers();
 			}
 		}
@@ -210,7 +233,9 @@ int main(){
 			debugMode = !debugMode;
 
 			if (debugMode){
-				cout << "area highlighted now : " << it2->first << endl;
+				//cout << "area highlighted now : " << it2->first << endl;
+				Color32 res = getAreaColour(43200000);
+				printf("rgba= %d %d %d %d\n",res.r,res.g,res.b,res.a);
 			} else {
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
