@@ -180,11 +180,22 @@ void Framebuffer::SwapBuffers()
 	memcpy(fbp, bbp, screensize);
 }
 
+// void Framebuffer::ClearScreen(){
+// 	int i;
+// 	for(i = 0; i < screensize; i++){
+// 		*(bbp+i) = 0;
+// 	}
+// }
+
 void Framebuffer::ClearScreen(){
-	int i;
-	for(i = 0; i < screensize; i++){
-		*(bbp+i) = 0;
-	}
+    int i, j;
+    for(i = 0; i < this->height; i++){
+        for(j = 0; j < this->width; j++){
+            SetPixel(j, i, DEFAULT);
+        }
+    }
+
+    SwapBuffers();
 }
 
 void Framebuffer::SetPixel(int x, int y, Color32 color){

@@ -259,7 +259,7 @@ void Shape::unfill(Framebuffer* f, vector<Point> windowBorder) {
       //printf("tipot ke-%d : (%d, %d)\n", i, tipot[i].x, tipot[i].y);
       for (int x = tipot[i].x; x <= tipot[i+1].x; x++) {
         if (!freeMatrix[y][x]) {
-        f->SetPixel(x, y, BLACK); 
+        f->SetPixel(x, y, DEFAULT); 
         freeMatrix[y][x] = true;
         }
       }

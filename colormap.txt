@@ -1,25 +1,16 @@
-[ForeignArea1]
+[KualaLumpur]
 206 206 206 255
 
-[ForeignArea2]
+[LongXuyen]
 206 206 206 255
 
-[ForeignArea14]
+[Australia]
 206 206 206 255
 
-[ForeignArea23]
+[Mindanao]
 206 206 206 255
 
-[ForeignArea30]
-206 206 206 255
-
-[ForeignArea32]
-206 206 206 255
-
-[ForeignArea39]
-206 206 206 255
-
-[ForeignArea47]
+[Borneo]
 206 206 206 255
 
 [KalimantanSelatan1]
@@ -28,49 +19,19 @@
 [KalimantanSelatan2]
 234 212 162 255
 
-[KalimantanTengah1]
+[KalimantanTengah]
 219 157 141 255
 
-[KalimantanTimur1]
+[KalimantanTimur]
 220 224 153 255
 
-[Area1]
+[KalimantanBarat]
 200 164 216 255
 
-[Area7]
+[Riau]
 219 157 141 255
 
-[Area59]
-219 157 141 255
-
-[Area62]
-219 157 141 255
-
-[Area69]
-219 157 141 255
-
-[Area71]
-219 157 141 255
-
-[Area75]
-186 237 140 255
-
-[Area77]
-186 237 140 255
-
-[Area120]
-234 212 162 255
-
-[Area122]
-200 164 216 255
-
-[Area123]
-234 212 162 255
-
-[Area124]
-186 237 140 255
-
-[Bengkulu3]
+[Bengkulu]
 186 237 140 255
 
 [SumateraBarat1]
@@ -79,28 +40,52 @@
 [SumateraBarat2]
 220 224 153 255
 
+[SumateraBarat3]
+220 224 153 255
+
 [SumateraBarat4]
 220 224 153 255
 
-[SumateraBarat6]
+[SumateraBarat5]
 220 224 153 255
 
-[SumateraBarat7]
-220 224 153 255
-
-[Lampung1]
+[Lampung]
 219 157 141 255
 
 [SumateraUtara1]
 186 237 140 255
 
-[SumateraUtara3]
+[SumateraUtara2]
 186 237 140 255
 
-[AcehSpecial4]
+[Aceh]
 234 212 162 255
 
-[Jambi1]
+[Jambi]
+200 164 216 255
+
+[SumateraSelatan]
+219 157 141 255
+
+[BangkaBelitung1]
+219 157 141 255
+
+[BangkaBelitung2]
+219 157 141 255
+
+[MalukuUtara1]
+219 157 141 255
+
+[MalukuUtara2]
+186 237 140 255
+
+[MalukuUtara3]
+186 237 140 255
+
+[Maluku1]
+234 212 162 255
+
+[Maluku2]
 200 164 216 255
 
 [IrianJaya1]
@@ -109,22 +94,13 @@
 [IrianJaya2]
 200 164 216 255
 
-[IrianJaya11]
+[IrianJayaBarat]
 234 212 162 255
 
-[IrianJaya14]
-234 212 162 255
-
-[IrianJaya16]
-200 164 216 255
-
-[IrianJaya17]
-234 212 162 255
-
-[Yogyakarta1]
+[Yogyakarta]
 186 237 140 255
 
-[JawaBarat1]
+[JawaBarat]
 219 157 141 255
 
 [NusaTenggaraTimur1]
@@ -139,53 +115,59 @@
 [NusaTenggaraTimur4]
 220 224 153 255
 
-[NusaTenggaraTimur9]
+[NusaTenggaraTimur5]
 220 224 153 255
 
-[NusaTenggaraTimur10]
+[NusaTenggaraTimur6]
 220 224 153 255
 
-[NusaTenggaraTimur12]
+[NusaTenggaraTimur7]
 220 224 153 255
 
-[NusaTenggaraTimur13]
+[NusaTenggaraTimur8]
 220 224 153 255
 
 [NusaTenggaraBarat1]
 186 237 140 255
 
-[NusaTenggaraBarat4]
+[NusaTenggaraBarat2]
 186 237 140 255
+
+[JawaTimur1]
+234 212 162 255
 
 [JawaTimur2]
 234 212 162 255
 
-[JawaTimur4]
-234 212 162 255
-
-[JawaTengah1]
+[JawaTengah]
 200 164 216 255
 
-[Bali1]
+[Bali]
 219 157 141 255
 
-[SulawesiUtara8]
+[Banten]
+234 212 162 255
+
+[SulawesiUtara]
 186 237 140 255
 
-[SulawesiSelatan1]
+[SulawesiSelatan]
 219 157 141 255
 
 [SulawesiTenggara1]
 220 224 153 255
 
-[SulawesiTenggara6]
+[SulawesiTenggara2]
 220 224 153 255
 
-[SulawesiTenggara7]
+[SulawesiTenggara3]
 220 224 153 255
 
-[SulawesiTenggara8]
+[SulawesiTenggara4]
 220 224 153 255
 
-[SulawesiTengah9]
+[SulawesiTengah]
 200 164 216 255
+
+[Gorontalo]
+186 237 140 255

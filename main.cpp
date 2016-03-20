@@ -9,6 +9,7 @@
 #include "shape.h"
 #include "maillot.h"
 #include <unistd.h>
+#include <cstdlib>
 //#include <fstream>
 
 #define MAXCITIZEN 43200000 // max citizen in a province
@@ -44,14 +45,14 @@ void removeLabel(string province, string population){
 	std::copy(province.begin(), province.end(), provinsi_label);
 	provinsi_label[province.size()] = '\0'; // don't forget the terminating 0
 
-	framebuffer.DrawString(provinsi_label, 10, framebuffer.height - 40, 1, BLACK);
+	framebuffer.DrawString(provinsi_label, 10, framebuffer.height - 40, 1, DEFAULT);
 	delete[] provinsi_label;
 
 	char* populasi_label = new char[population.size() + 1];
 	std::copy(population.begin(), population.end(), populasi_label);
 	populasi_label[population.size()] = '\0'; // don't forget the terminating 0
 
-	framebuffer.DrawString(populasi_label, 10, framebuffer.height - 25, 1, BLACK);
+	framebuffer.DrawString(populasi_label, 10, framebuffer.height - 25, 1, DEFAULT);
 	delete[] populasi_label;
 }
 
@@ -78,6 +79,7 @@ void printLabel(string new_province, string new_population){
 }
 
 int main(){
+	system("setterm -cursor off");
 	framebuffer.ClearScreen();
 	framebuffer.SwapBuffers();
 	set_conio_terminal_mode();
@@ -153,220 +155,222 @@ int main(){
 	bool debugMode = false;
 
 	while(1){
-		// cout << "area highlighted before : " << it2->first << endl;
-		char c = getch();
+		if(kbhit()){
+			// cout << "area highlighted before : " << it2->first << endl;
+			char c = getch();
 
-		if(c == 'h'){ //fill next area
-			if (next(it2) != areas.end()) {
-				removeLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+			if(c == 'h'){ //fill next area
+				if (next(it2) != areas.end()) {
+					removeLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+
+					it2->second.unfill(&framebuffer, windowBorder);
+					it2->second.draw(&framebuffer, WHITE);
+					it2++; mapPopulation++;
+					it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+					printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+					framebuffer.SwapBuffers();
+				}
+			} 
+			else if(c == 'g'){ //fill previous area
+				if (prev(it2) != prev(areas.begin())) {
+					removeLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+
+					it2->second.unfill(&framebuffer, windowBorder);
+					it2->second.draw(&framebuffer, WHITE);
+					it2--; mapPopulation--;
+					it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);	
+					printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+					framebuffer.SwapBuffers();
+				}
+			}
+			else if (c == 'w') { // move up
+				framebuffer.ClearScreen();
+				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+					//it->second.undraw(&framebuffer);
+					//it->second.unfill(&framebuffer, windowBorder);
+					//initMatrix();
+					it->second.transform(0, -dy, 1, 0);
+					Shape sclip = Pclip(it->second, Pmin, Pmax);
+					sclip.draw(&framebuffer, WHITE);
+					//sclip.fill(WHITE, &framebuffer, windowBorder);
+				}
+
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
-				it2++; mapPopulation++;
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
-				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+
 				framebuffer.SwapBuffers();
 			}
-		} 
-		else if(c == 'g'){ //fill previous area
-			if (prev(it2) != prev(areas.begin())) {
-				removeLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+			else if (c == 's') { // move down
+				framebuffer.ClearScreen();
+				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+					//it->second.undraw(&framebuffer);
+					//it->second.unfill(&framebuffer, windowBorder);
+					//initMatrix();
+					it->second.transform(0, dy, 1, 0);
+					Shape sclip = Pclip(it->second, Pmin, Pmax);
+					sclip.draw(&framebuffer, WHITE);
+					//sclip.fill(WHITE, &framebuffer, windowBorder);
+				}
+
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
 				it2->second.unfill(&framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
-				it2--; mapPopulation--;
-				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);	
-				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+
 				framebuffer.SwapBuffers();
 			}
-		}
-		else if (c == 'w') { // move up
-			framebuffer.ClearScreen();
-			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
-				//it->second.undraw(&framebuffer);
-				//it->second.unfill(&framebuffer, windowBorder);
-				//initMatrix();
-				it->second.transform(0, -dy, 1, 0);
-				Shape sclip = Pclip(it->second, Pmin, Pmax);
-				sclip.draw(&framebuffer, WHITE);
-				//sclip.fill(WHITE, &framebuffer, windowBorder);
+			else if (c == 'a') { // move left
+				framebuffer.ClearScreen();
+				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+					//it->second.undraw(&framebuffer);
+					//it->second.unfill(&framebuffer, windowBorder);
+					//initMatrix();
+					it->second.transform(-dx, 0, 1, 0);
+					Shape sclip = Pclip(it->second, Pmin, Pmax);
+					sclip.draw(&framebuffer, WHITE);
+					//sclip.fill(WHITE, &framebuffer, windowBorder);
+				}
+
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+
+				framebuffer.SwapBuffers();
 			}
+			else if (c == 'd') { // move right
+				framebuffer.ClearScreen();
+				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+					//it->second.undraw(&framebuffer);
+					//it->second.unfill(&framebuffer, windowBorder);
+					//initMatrix();
+					it->second.transform(dx, 0, 1, 0);
+					Shape sclip = Pclip(it->second, Pmin, Pmax);
+					sclip.draw(&framebuffer, WHITE);
+					//sclip.fill(WHITE, &framebuffer, windowBorder);
+				}
 
-			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-			it2->second.unfill(&framebuffer, windowBorder);
-			it2->second.draw(&framebuffer, WHITE);
-			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
-			framebuffer.SwapBuffers();
-		}
-		else if (c == 's') { // move down
-			framebuffer.ClearScreen();
-			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
-				//it->second.undraw(&framebuffer);
-				//it->second.unfill(&framebuffer, windowBorder);
-				//initMatrix();
-				it->second.transform(0, dy, 1, 0);
-				Shape sclip = Pclip(it->second, Pmin, Pmax);
-				sclip.draw(&framebuffer, WHITE);
-				//sclip.fill(WHITE, &framebuffer, windowBorder);
+				framebuffer.SwapBuffers();
 			}
+			else if (c == 'i') { // zooom in
+				framebuffer.ClearScreen();
+				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+					//it->second.undraw(&framebuffer);
+					//initMatrix();
+					it->second.transform(0, 0, 1+sf, 0);
+					Shape sclip = Pclip(it->second, Pmin, Pmax);
+					sclip.draw(&framebuffer, WHITE);
+					//sclip.fill(WHITE, &framebuffer, windowBorder);
+				}
 
-			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-			it2->second.unfill(&framebuffer, windowBorder);
-			it2->second.draw(&framebuffer, WHITE);
-			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
-			framebuffer.SwapBuffers();
-		}
-		else if (c == 'a') { // move left
-			framebuffer.ClearScreen();
-			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
-				//it->second.undraw(&framebuffer);
-				//it->second.unfill(&framebuffer, windowBorder);
-				//initMatrix();
-				it->second.transform(-dx, 0, 1, 0);
-				Shape sclip = Pclip(it->second, Pmin, Pmax);
-				sclip.draw(&framebuffer, WHITE);
-				//sclip.fill(WHITE, &framebuffer, windowBorder);
+				framebuffer.SwapBuffers();
 			}
+			else if (c == 'o') { // zoom out
+				framebuffer.ClearScreen();
+				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+					//it->second.undraw(&framebuffer);
+					//initMatrix();
+					it->second.transform(0, 0, 1-sf, 0);
+					Shape sclip = Pclip(it->second, Pmin, Pmax);
+					sclip.draw(&framebuffer, WHITE);
+					//sclip.fill(WHITE, &framebuffer, windowBorder);
+				}
 
-			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-			it2->second.unfill(&framebuffer, windowBorder);
-			it2->second.draw(&framebuffer, WHITE);
-			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
-			framebuffer.SwapBuffers();
-		}
-		else if (c == 'd') { // move right
-			framebuffer.ClearScreen();
-			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
-				//it->second.undraw(&framebuffer);
-				//it->second.unfill(&framebuffer, windowBorder);
-				//initMatrix();
-				it->second.transform(dx, 0, 1, 0);
-				Shape sclip = Pclip(it->second, Pmin, Pmax);
-				sclip.draw(&framebuffer, WHITE);
-				//sclip.fill(WHITE, &framebuffer, windowBorder);
+				framebuffer.SwapBuffers();
 			}
+			else if (c == 'l') { // rotate right
+				framebuffer.ClearScreen();
+				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+					//it->second.undraw(&framebuffer);
+					//initMatrix();
+					it->second.transform(0, 0, 1, deg);
+					Shape sclip = Pclip(it->second, Pmin, Pmax);
+					sclip.draw(&framebuffer, WHITE);
+					//sclip.fill(WHITE, &framebuffer, windowBorder);
+				}
 
-			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-			it2->second.unfill(&framebuffer, windowBorder);
-			it2->second.draw(&framebuffer, WHITE);
-			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
-			framebuffer.SwapBuffers();
-		}
-		else if (c == 'i') { // zooom in
-			framebuffer.ClearScreen();
-			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
-				//it->second.undraw(&framebuffer);
-				//initMatrix();
-				it->second.transform(0, 0, 1+sf, 0);
-				Shape sclip = Pclip(it->second, Pmin, Pmax);
-				sclip.draw(&framebuffer, WHITE);
-				//sclip.fill(WHITE, &framebuffer, windowBorder);
+				framebuffer.SwapBuffers();
 			}
+			else if (c == 'k') { // rotate left
+				framebuffer.ClearScreen();
+				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
+					//it->second.undraw(&framebuffer);
+					//initMatrix();
+					it->second.transform(0, 0, 1, -deg);
+					Shape sclip = Pclip(it->second, Pmin, Pmax);
+					sclip.draw(&framebuffer, WHITE);
+					//sclip.fill(WHITE, &framebuffer, windowBorder);
+				}
 
-			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
+				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-			it2->second.unfill(&framebuffer, windowBorder);
-			it2->second.draw(&framebuffer, WHITE);
-			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
-
-			framebuffer.SwapBuffers();
-		}
-		else if (c == 'o') { // zoom out
-			framebuffer.ClearScreen();
-			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
-				//it->second.undraw(&framebuffer);
-				//initMatrix();
-				it->second.transform(0, 0, 1-sf, 0);
-				Shape sclip = Pclip(it->second, Pmin, Pmax);
-				sclip.draw(&framebuffer, WHITE);
-				//sclip.fill(WHITE, &framebuffer, windowBorder);
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
+				framebuffer.SwapBuffers();
 			}
+			else if (c == 'c') {
+				initMatrix();
+				for(map<string, Color32>::iterator it=colors.begin(); it!=colors.end(); it++){
+					Color32 RGB = it->second;
+					string str = it->first;
+					Shape sclip = Pclip(areas[str], Pmin, Pmax);
+					sclip.fill((Color32)RGB, &framebuffer, windowBorder);
+				}
 
-			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
-
-			it2->second.unfill(&framebuffer, windowBorder);
-			it2->second.draw(&framebuffer, WHITE);
-			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
-
-			framebuffer.SwapBuffers();
-		}
-		else if (c == 'l') { // rotate right
-			framebuffer.ClearScreen();
-			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
-				//it->second.undraw(&framebuffer);
-				//initMatrix();
-				it->second.transform(0, 0, 1, deg);
-				Shape sclip = Pclip(it->second, Pmin, Pmax);
-				sclip.draw(&framebuffer, WHITE);
-				//sclip.fill(WHITE, &framebuffer, windowBorder);
+				framebuffer.SwapBuffers();
 			}
-
-			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
-
-			it2->second.unfill(&framebuffer, windowBorder);
-			it2->second.draw(&framebuffer, WHITE);
-			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
-
-			framebuffer.SwapBuffers();
-		}
-		else if (c == 'k') { // rotate left
-			framebuffer.ClearScreen();
-			for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
-				//it->second.undraw(&framebuffer);
-				//initMatrix();
-				it->second.transform(0, 0, 1, -deg);
-				Shape sclip = Pclip(it->second, Pmin, Pmax);
-				sclip.draw(&framebuffer, WHITE);
-				//sclip.fill(WHITE, &framebuffer, windowBorder);
+			else if(c == 'x'){
+				break;
 			}
+			else if(c == '1'){
+				debugMode = !debugMode;
 
-			printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
-
-			it2->second.unfill(&framebuffer, windowBorder);
-			it2->second.draw(&framebuffer, WHITE);
-			it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
-			framebuffer.SwapBuffers();
-		}
-		else if (c == 'c') {
-			initMatrix();
-			for(map<string, Color32>::iterator it=colors.begin(); it!=colors.end(); it++){
-				Color32 RGB = it->second;
-				string str = it->first;
-				Shape sclip = Pclip(areas[str], Pmin, Pmax);
-				sclip.fill((Color32)RGB, &framebuffer, windowBorder);
+				if (debugMode){
+					//cout << "area highlighted now : " << it2->first << endl;
+					Color32 res = getAreaColour(43200000);
+					printf("rgba= %d %d %d %d\n",res.r,res.g,res.b,res.a);
+				} else {
+					it2->second.unfill(&framebuffer, windowBorder);
+					it2->second.draw(&framebuffer, WHITE);
+					// it2++;
+					it2->second.fill(RED, &framebuffer, windowBorder);
+					framebuffer.SwapBuffers();
+				}
 			}
-
-			framebuffer.SwapBuffers();
-		}
-		else if(c == 'x'){
-			break;
-		}
-		else if(c == '1'){
-			debugMode = !debugMode;
 
 			if (debugMode){
-				//cout << "area highlighted now : " << it2->first << endl;
-				Color32 res = getAreaColour(43200000);
-				printf("rgba= %d %d %d %d\n",res.r,res.g,res.b,res.a);
-			} else {
-				it2->second.unfill(&framebuffer, windowBorder);
-				it2->second.draw(&framebuffer, WHITE);
-				// it2++;
-				it2->second.fill(RED, &framebuffer, windowBorder);
-				framebuffer.SwapBuffers();
+				cout << "area highlighted now : " << it2->first << endl;
 			}
-		}
-
-		if (debugMode){
-			cout << "area highlighted now : " << it2->first << endl;
 		}
 	}
 
