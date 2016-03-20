@@ -72,9 +72,12 @@ int main(){
 	int dy = 10;
 	float sf = 0.1; // scaling factor
 	float deg = 15.0; // degree of rotation
+	bool debugMode = false;
 
 	while(1){
+		// cout << "area highlighted before : " << it2->first << endl;
 		char c = getch();
+
 		if(c == 'h'){ //fill next area
 			if (next(it2) != areas.end()) {
 				it2->second.unfill(&framebuffer, windowBorder);
@@ -196,8 +199,23 @@ int main(){
 		else if(c == 'x'){
 			break;
 		}
-		
+		else if(c == '1'){
+			debugMode = !debugMode;
 
+			if (debugMode){
+				cout << "area highlighted now : " << it2->first << endl;
+			} else {
+				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.draw(&framebuffer, WHITE);
+				// it2++;
+				it2->second.fill(RED, &framebuffer, windowBorder);
+				framebuffer.SwapBuffers();
+			}
+		}
+
+		if (debugMode){
+			cout << "area highlighted now : " << it2->first << endl;
+		}
 	}
 
 	cout << "area highlighted : " << it2->first << endl;
