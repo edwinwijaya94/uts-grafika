@@ -115,10 +115,10 @@ void Shape::fill(Color32 color, Framebuffer* f, vector<Point> windowBorder) {
     for (int i = 0; i < tipot.size()-1; i += 2) {
     	//printf("tipot ke-%d : (%d, %d)\n", i, tipot[i].x, tipot[i].y);
     	for (int x = tipot[i].x; x <= tipot[i+1].x; x++) {
-    		if (freeMatrix[y][x]) {
+    		// if (freeMatrix[y][x]) {
 				f->SetPixel(x, y, color);	
 				freeMatrix[y][x] = false;
-    		}
+    		// }
     	}
     }
   }
@@ -212,7 +212,7 @@ void Shape::fillGradient(Color32 color, int interval, Framebuffer *f) {
   }	
 }
 
-void Shape::unfill(Framebuffer* f, vector<Point> windowBorder) {
+void Shape::unfill(Color32 color, Framebuffer* f, vector<Point> windowBorder) {
   vector<Point> tipot;
   int oldy;
   //printf("fill\n");
@@ -258,10 +258,10 @@ void Shape::unfill(Framebuffer* f, vector<Point> windowBorder) {
     for (int i = 0; i < tipot.size()-1; i += 2) {
       //printf("tipot ke-%d : (%d, %d)\n", i, tipot[i].x, tipot[i].y);
       for (int x = tipot[i].x; x <= tipot[i+1].x; x++) {
-        if (!freeMatrix[y][x]) {
-        f->SetPixel(x, y, DEFAULT); 
+        // if (!freeMatrix[y][x]) {
+        f->SetPixel(x, y, color); 
         freeMatrix[y][x] = true;
-        }
+        // }
       }
     }
   }

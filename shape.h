@@ -30,7 +30,7 @@ class Shape {
     void getTipotForWindow(vector<Point> *tipot, vector<Point> windowBorder);
     void fillGradient(Color32 color, int interval, Framebuffer* f);
     void transform(int dx, int dy, float scale, float rotation);
-    void unfill(Framebuffer* f, vector<Point> windowBorder);
+    void unfill(Color32 color, Framebuffer* f, vector<Point> windowBorder);
     void undraw(Framebuffer* f);
     void setCentroid(Point newPoint);
 };

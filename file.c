@@ -97,7 +97,7 @@ map<string, Color32 > getColorsFromFile(vector<string> filenames){
                 bc = b;
                 ac = a;
                 colors[label] = (Color32){rc,gc,bc,ac};
-                //cout<<"r:"<<r <<"g:"<<g <<"b:"<<b <<"a:"<<a<<endl;
+                // cout<<"r:"<<r <<"g:"<<g <<"b:"<<b <<"a:"<<a<<endl;
             }
         }
     }

@@ -108,7 +108,7 @@ int main(){
 	//Mapping the population of each region with the same order
 	map<string, int> populations = getIntegersFromFile(populationFile);
 	//Mapping the colors of each region
-	map<string, Color32 > colors = getColorsFromFile(filenames);
+	map<string, Color32 > colors = getColorsFromFile(colorFiles);
 
 	//vector<Shape> areas;
 	map<string, Shape> areas;
@@ -127,7 +127,7 @@ int main(){
 		Shape sclip = Pclip(s, Pmin, Pmax);
 		//s.draw(&framebuffer, WHITE);
 		sclip.draw(&framebuffer, WHITE);
-		//sclip.fill(WHITE, &framebuffer, windowBorder);
+		sclip.fill(colors[it->first], &framebuffer, windowBorder);
 		//areas.push_back(s); // add new area
 		areas[str] = s;
 		//areas[str] = sclip;
@@ -162,8 +162,8 @@ int main(){
 			if(c == 'h'){ //fill next area
 				if (next(it2) != areas.end()) {
 					removeLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
-
-					it2->second.unfill(&framebuffer, windowBorder);
+					
+					it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 					it2->second.draw(&framebuffer, WHITE);
 					it2++; mapPopulation++;
 					it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
@@ -175,7 +175,7 @@ int main(){
 				if (prev(it2) != prev(areas.begin())) {
 					removeLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-					it2->second.unfill(&framebuffer, windowBorder);
+					it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 					it2->second.draw(&framebuffer, WHITE);
 					it2--; mapPopulation--;
 					it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);	
@@ -187,17 +187,18 @@ int main(){
 				framebuffer.ClearScreen();
 				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
 					//it->second.undraw(&framebuffer);
-					//it->second.unfill(&framebuffer, windowBorder);
+					//it->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 					//initMatrix();
 					it->second.transform(0, -dy, 1, 0);
 					Shape sclip = Pclip(it->second, Pmin, Pmax);
 					sclip.draw(&framebuffer, WHITE);
+					sclip.fill(colors[it->first], &framebuffer, windowBorder);
 					//sclip.fill(WHITE, &framebuffer, windowBorder);
 				}
 
 				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
@@ -207,17 +208,18 @@ int main(){
 				framebuffer.ClearScreen();
 				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
 					//it->second.undraw(&framebuffer);
-					//it->second.unfill(&framebuffer, windowBorder);
+					//it->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 					//initMatrix();
 					it->second.transform(0, dy, 1, 0);
 					Shape sclip = Pclip(it->second, Pmin, Pmax);
 					sclip.draw(&framebuffer, WHITE);
+					sclip.fill(colors[it->first], &framebuffer, windowBorder);
 					//sclip.fill(WHITE, &framebuffer, windowBorder);
 				}
 
 				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
@@ -227,17 +229,18 @@ int main(){
 				framebuffer.ClearScreen();
 				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
 					//it->second.undraw(&framebuffer);
-					//it->second.unfill(&framebuffer, windowBorder);
+					//it->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 					//initMatrix();
 					it->second.transform(-dx, 0, 1, 0);
 					Shape sclip = Pclip(it->second, Pmin, Pmax);
 					sclip.draw(&framebuffer, WHITE);
+					sclip.fill(colors[it->first], &framebuffer, windowBorder);
 					//sclip.fill(WHITE, &framebuffer, windowBorder);
 				}
 
 				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
@@ -247,17 +250,18 @@ int main(){
 				framebuffer.ClearScreen();
 				for(map<string, Shape>::iterator it=areas.begin(); it!=areas.end(); it++){
 					//it->second.undraw(&framebuffer);
-					//it->second.unfill(&framebuffer, windowBorder);
+					//it->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 					//initMatrix();
 					it->second.transform(dx, 0, 1, 0);
 					Shape sclip = Pclip(it->second, Pmin, Pmax);
 					sclip.draw(&framebuffer, WHITE);
+					sclip.fill(colors[it->first], &framebuffer, windowBorder);
 					//sclip.fill(WHITE, &framebuffer, windowBorder);
 				}
 
 				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
@@ -271,12 +275,13 @@ int main(){
 					it->second.transform(0, 0, 1+sf, 0);
 					Shape sclip = Pclip(it->second, Pmin, Pmax);
 					sclip.draw(&framebuffer, WHITE);
+					sclip.fill(colors[it->first], &framebuffer, windowBorder);
 					//sclip.fill(WHITE, &framebuffer, windowBorder);
 				}
 
 				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
@@ -290,12 +295,13 @@ int main(){
 					it->second.transform(0, 0, 1-sf, 0);
 					Shape sclip = Pclip(it->second, Pmin, Pmax);
 					sclip.draw(&framebuffer, WHITE);
+					sclip.fill(colors[it->first], &framebuffer, windowBorder);
 					//sclip.fill(WHITE, &framebuffer, windowBorder);
 				}
 
 				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
@@ -309,12 +315,13 @@ int main(){
 					it->second.transform(0, 0, 1, deg);
 					Shape sclip = Pclip(it->second, Pmin, Pmax);
 					sclip.draw(&framebuffer, WHITE);
+					sclip.fill(colors[it->first], &framebuffer, windowBorder);
 					//sclip.fill(WHITE, &framebuffer, windowBorder);
 				}
 
 				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 
@@ -328,12 +335,13 @@ int main(){
 					it->second.transform(0, 0, 1, -deg);
 					Shape sclip = Pclip(it->second, Pmin, Pmax);
 					sclip.draw(&framebuffer, WHITE);
+					sclip.fill(colors[it->first], &framebuffer, windowBorder);
 					//sclip.fill(WHITE, &framebuffer, windowBorder);
 				}
 
 				printLabel(it2->first, to_string(mapPopulation->second) + " penduduk");
 
-				it2->second.unfill(&framebuffer, windowBorder);
+				it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 				it2->second.draw(&framebuffer, WHITE);
 				it2->second.fill(getAreaColour(mapPopulation->second), &framebuffer, windowBorder);
 				framebuffer.SwapBuffers();
@@ -360,7 +368,7 @@ int main(){
 					Color32 res = getAreaColour(43200000);
 					printf("rgba= %d %d %d %d\n",res.r,res.g,res.b,res.a);
 				} else {
-					it2->second.unfill(&framebuffer, windowBorder);
+					it2->second.unfill(colors[it2->first], &framebuffer, windowBorder);
 					it2->second.draw(&framebuffer, WHITE);
 					// it2++;
 					it2->second.fill(RED, &framebuffer, windowBorder);
