@@ -9,6 +9,7 @@
 #include <map>
 #include "point.h"
 #include "point2.h"
+#include "color32.h"
 
 using namespace std;
 
@@ -25,5 +26,6 @@ using namespace std;
 // 9 8
 map<string, vector<Point>> getPointsFromFile(vector<string>);
 map<string, int> getIntegersFromFile(vector<string>);
+map<string, Color32 > getColorsFromFile(vector<string>);
 
 #endif
